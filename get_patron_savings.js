@@ -1,6 +1,34 @@
-// this matches 6 or more numbers in the string ... is more simple, but less accurate
-var patron_num_re = /[0-9]{6,}/;
-// or we can use this one to match any lenght of number as long as they come after a '/' (negative look around) and before a '/newpin' value (positive look around)
-// more complex, and may work better, depending on the situation.
-// var patron_num_re = (?<=\/)([0-9]{1,})(?=\/newpin)
-patron_num_re.exec(document.getElementById('modPinPopupWindowLinkComponent').getAttribute('onclick'))[0];
+// only perform the value calculation if we're on the myaccount page
+if (window.location.pathname === '/iii/encore/myaccount') {
+    // this matches 6 or more numbers in the string ... is more simple, but less accurate
+    var patron_num_re = /[0-9]{6,}/;
+    // or we can use this one to match any lenght of number as long as they come after a '/' (negative look around) and before a '/newpin' value (positive look around)
+    // more complex, and may work better, depending on the situation.
+    // var patron_num_re = (?<=\/)([0-9]{1,})(?=\/newpin)
+    var patron_record_num = patron_num_re.exec(document.getElementById('modPinPopupWindowLinkComponent').getAttribute('onclick'))[0];
+    console.log('patron_record_num: ' + patron_record_num);
+
+    var plch_savings_node_id = 'plch_savings_node';
+    // remove any previous instances of the node (in case we've created it previously...)
+    try {
+        document.getElementById(plch_savings_node_id).outerHTML = '';
+    }
+    catch(err) {
+        console.log('no existing nodes, fetching the data for the first time.');
+    } 
+    // find the parent node that we want to append to
+    var savings_node_parent = document.getElementsByClassName('accountSummaryColumn')[1];
+    // create the new node that will contain the display text and style
+    var savings_node = document.createElement('span');
+    savings_node.id = plch_savings_node_id;
+    savings_node.style.color = 'green';
+    var savings_node_title = document.createElement('h4');
+    savings_node_title.style.paddingTop = '10px';
+    savings_node_title.innerHTML = 'Approximate Savings*:'
+    var savings_node_text = document.createTextNode('127.27');
+
+    savings_node.appendChild(savings_node_title);
+    savings_node.appendChild(savings_node_text);
+
+    savings_node_parent.appendChild(savings_node);
+}
