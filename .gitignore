@@ -6,4 +6,5 @@ output/
 *.ini
 *.db
 *.txt
+!requirements.txt
 *.xz
