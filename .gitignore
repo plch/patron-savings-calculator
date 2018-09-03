@@ -1,0 +1,9 @@
+venv/
+env/
+testing/
+output/
+.vscode/
+*.ini
+*.db
+*.txt
+*.xz
