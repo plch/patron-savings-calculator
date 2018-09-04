@@ -15,7 +15,10 @@ if (window.location.pathname === '/iii/encore/myaccount') {
     }
     catch(err) {
         console.log('no existing nodes, fetching the data for the first time.');
-    } 
+    }
+
+    var plch_d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+    plch_d.setUTCSeconds(1534957500);
     // find the parent node that we want to append to
     var savings_node_parent = document.getElementsByClassName('accountSummaryColumn')[1];
     // create the new node that will contain the display text and style
@@ -24,8 +27,8 @@ if (window.location.pathname === '/iii/encore/myaccount') {
     savings_node.style.color = 'green';
     var savings_node_title = document.createElement('h4');
     savings_node_title.style.paddingTop = '10px';
-    savings_node_title.innerHTML = 'Approximate Savings*:'
-    var savings_node_text = document.createTextNode('127.27');
+    savings_node_title.innerHTML = 'Approximate Savings*:';
+    var savings_node_text = document.createTextNode('$175.41 (since ' + plch_d.toLocaleDateString('en-us') + ')' );
 
     savings_node.appendChild(savings_node_title);
     savings_node.appendChild(savings_node_text);
