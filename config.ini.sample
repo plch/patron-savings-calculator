@@ -1,0 +1,9 @@
+[db]
+	connection_string = dbname='iii' user='USERNAME_HERE' host='HOSTNAME_HERE.ORG' password='PASSWORD_HERE' port=1032 sslmode='require'
+	itersize = 5000
+
+[local_db]
+	connection_string = patron_savings.db
+
+[misc]
+	salt = USE_SOME_LONG_RANDOM_SALT_TEXT HERE_TO_CREATE_HASHED_BIB_NUMBERS
