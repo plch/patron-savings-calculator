@@ -44,7 +44,7 @@ class PatronSavings(Resource):
         sql = """
         WITH prices AS (
             SELECT
-			circ_trans.patron_record_num,
+            circ_trans.patron_record_num,
             circ_trans.bib_record_hash,
             circ_trans.price
 
@@ -55,24 +55,25 @@ class PatronSavings(Resource):
             circ_trans.patron_record_num = ?
 
             GROUP BY
-			circ_trans.patron_record_num,
+            circ_trans.patron_record_num,
             circ_trans.bib_record_hash,
             circ_trans.price
         )
 
         SELECT
-		prices.patron_record_num,
+        prices.patron_record_num,
         SUM(prices.price) AS total,
         (
             SELECT
             MIN(circ_trans.transaction_epoch)
-            
+
             FROM
             circ_trans
-            
+
             WHERE
             circ_trans.patron_record_num = ?
-        ) AS min_date
+        ) AS min_date,
+        count(prices.bib_record_hash) as count_titles
 
         FROM 
         prices
@@ -86,7 +87,8 @@ class PatronSavings(Resource):
             return {
                 'patron_record_num': data[0],
                 'total_savings': data[1],
-                'min_date_epoch': data[2]
+                'min_date_epoch': data[2],
+                'count_titles': data[3]
             }
         else:
             # return a null value, and a http 404 code for no patron info found
