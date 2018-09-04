@@ -1,9 +1,12 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
+from flask_cors import CORS
 import configparser
 import sqlite3
 
 app = Flask(__name__)
+# allow CORS for all domains and routes (makes cross-origin AJAX possible)
+CORS(app)
 api = Api(app)
 
 class PatronSavings(Resource):
@@ -109,4 +112,5 @@ class PatronSavings(Resource):
 api.add_resource(PatronSavings, '/<int:patron_record_num>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # note: this is only for testing, but in order to test on encore (which loads account info over https, we need to serve our API over https)
+    app.run(debug=True, host='0.0.0.0', ssl_context='adhoc')
