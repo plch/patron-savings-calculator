@@ -1,13 +1,18 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from flask_restful import Resource, Api
 from flask_cors import CORS
 import configparser
 import sqlite3
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 # allow CORS for all domains and routes (makes cross-origin AJAX possible)
 CORS(app)
 api = Api(app)
+
+# this should be only used for testing purposes only ...it's better to serve javascript from a webserver like apache
+@app.route('/js/<path:path>')
+def send_js(path):
+    return send_from_directory('js', path)
 
 class PatronSavings(Resource):
     def __init__(self):
@@ -84,7 +89,7 @@ class PatronSavings(Resource):
         LIMIT 1
         ;
         """
-        cursor.execute(sql, (int(patron_record_num), int(patron_record_num, )))
+        cursor.execute(sql, (int(patron_record_num), int(patron_record_num)))
         data = cursor.fetchone()
         if (data[0] != None):
             return {
@@ -98,7 +103,7 @@ class PatronSavings(Resource):
             return None, 404
 
 
- 	#~ the destructor
+    #~ the destructor
     def __del__(self):
         # if the sqlite connection is still open, and we can, commit any uncommited results
         # ...although, if reading database in read-only mode, then this shouldn't matter
@@ -113,4 +118,5 @@ api.add_resource(PatronSavings, '/<int:patron_record_num>')
 
 if __name__ == '__main__':
     # note: this is only for testing, but in order to test on encore (which loads account info over https, we need to serve our API over https)
+    # TODO: get this endpoint running over 
     app.run(debug=True, host='0.0.0.0', ssl_context='adhoc')

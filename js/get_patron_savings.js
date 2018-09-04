@@ -52,6 +52,4 @@ if (window.location.pathname === '/iii/encore/myaccount') {
     // send the request
     plch_xhttp.open("GET", plch_patron_savings_api_address + patron_record_num, true);
     plch_xhttp.send();
-
-    
 }
