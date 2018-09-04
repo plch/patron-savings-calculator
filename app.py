@@ -7,7 +7,6 @@ app = Flask(__name__)
 api = Api(app)
 
 class PatronSavings(Resource):
-
     def __init__(self):
         #~ open the config file, and parse the options into local vars
         config = configparser.ConfigParser()
@@ -90,12 +89,14 @@ class PatronSavings(Resource):
                 'min_date_epoch': data[2]
             }
         else:
+            # return a null value, and a http 404 code for no patron info found
             return None, 404
 
 
  	#~ the destructor
     def __del__(self):
         # if the sqlite connection is still open, and we can, commit any uncommited results
+        # ...although, if reading database in read-only mode, then this shouldn't matter
         if self.sqlite_conn:
             if hasattr(self.sqlite_conn, 'commit'):
                 self.sqlite_conn.commit()
