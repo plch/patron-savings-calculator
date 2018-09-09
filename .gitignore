@@ -7,4 +7,6 @@ output/
 *.db
 *.txt
 !requirements.txt
+!UFL.txt
 *.xz
+*.png
