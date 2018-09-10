@@ -10,3 +10,4 @@ output/
 !UFL.txt
 *.xz
 *.png
+!docs/*.png

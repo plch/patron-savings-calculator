@@ -154,6 +154,7 @@ def send_js(path):
     return send_from_directory('js', path)
 
 
+# this route produces a json response (note that jsonify also sets the `mimetype='application/json'`)
 @app.route('/get/patron_savings/<int:patron_record_num>')
 def get_json_patron_savings(patron_record_num):
     patron_record_data = patron_savings.get_json(patron_record_num)
@@ -163,7 +164,7 @@ def get_json_patron_savings(patron_record_num):
         return jsonify(error=404), 404
 
 
-@app.route('/get/patron_savings_img/<int:patron_record_num>.png')
+@app.route('/get/patron_savings/img/<int:patron_record_num>')
 def get_json_patron_savings_img(patron_record_num):
     file_name = patron_savings.get_img(patron_record_num)
     if (file_name):
