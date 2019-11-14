@@ -1,4 +1,4 @@
-var plch_patron_savings_api_address = 'https://ilsweb.plch.net:5000/'
+var plch_patron_savings_api_address = 'https://ilsweb.cincinnatilibrary.org/api/v1/patron_savings/'
 var plch_xhttp = new XMLHttpRequest();
 
 plch_xhttp.onreadystatechange = function() {

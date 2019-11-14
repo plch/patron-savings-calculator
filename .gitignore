@@ -11,3 +11,4 @@ output/
 *.xz
 *.png
 !docs/*.png
+*.backup

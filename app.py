@@ -94,7 +94,7 @@ class PatronSavings():
             # return a null value, (make sure to set http 404 code for no patron info found)
             return None
 
-        
+
     def get_img(self, patron_record_num):
         # these libraries are only used for producing the image ... lazy load them
         from PIL import Image, ImageDraw, ImageFont
@@ -155,7 +155,7 @@ def send_js(path):
 
 
 # this route produces a json response (note that jsonify also sets the `mimetype='application/json'`)
-@app.route('/get/patron_savings/<int:patron_record_num>')
+@app.route('/<int:patron_record_num>')
 def get_json_patron_savings(patron_record_num):
     patron_record_data = patron_savings.get_json(patron_record_num)
     if (patron_record_data):
@@ -164,7 +164,7 @@ def get_json_patron_savings(patron_record_num):
         return jsonify(error=404), 404
 
 
-@app.route('/get/patron_savings/img/<int:patron_record_num>')
+@app.route('/img/<int:patron_record_num>')
 def get_json_patron_savings_img(patron_record_num):
     file_name = patron_savings.get_img(patron_record_num)
     if (file_name):
@@ -177,4 +177,4 @@ def get_json_patron_savings_img(patron_record_num):
 if __name__ == '__main__':
     # note: this is only for testing, but in order to test on encore (which loads account info over https, we need to serve our API over https)
     # TODO: get this endpoint running over
-    app.run(debug=True, host='0.0.0.0', ssl_context='adhoc')
+    app.run(debug=True, host='0.0.0.0', port=5000, ssl_context='adhoc')
